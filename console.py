@@ -13,14 +13,13 @@
 
  new_classes = {'BaseModel': BaseModel, 'User': User, 'State': State, 'Amenity': Amenity, 'Place': Place, 'City': City, 'Review': Review}
 
-
  # Declare the HBNBCommand class
- class HBNBCommand(cmd.cmd):
+ class HBNBCommand(cmd.Cmd):
 
      """
      Interpreting command
      """
-     prompt = "(hbnb)"
+     prompt = "(hbnb) "
 
      def do_quit(self, line):
          """
@@ -59,6 +58,7 @@
      """
      Show command to show an instance based on class name and id
      """
+
      if not line:
          print("** class name missing **")
      elif line.split()[0] not in new_classes.keys():
