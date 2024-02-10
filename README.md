@@ -76,4 +76,3 @@ To show an instance: show BaseModel 1234-5678
 To delete an instance: destroy BaseModel 1234-5678
 To list all instances: all or all BaseModel
 To update an attribute: update BaseModel 1234-5678 email "airbnb@mail.com"
-
