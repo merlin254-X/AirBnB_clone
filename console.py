@@ -20,7 +20,6 @@
      """
      Interpreting command
      """
-
      prompt = "(hbnb)"
 
      def do_quit(self, line):
@@ -46,7 +45,7 @@
          """
          Create command to create new User.
          """
-         splitline split(line)
+         splitline = split(line)
          if not splitline:
              print("** class name missing **")
          elif splitline[0] not in new_classes:
