@@ -55,7 +55,7 @@
              print(new_instance.id)
              new_instance.save()
      
-     def do_show(self, line)
+     def do_show(self, line):
      """
      Show command to show an instance based on class name and id
      """
@@ -65,114 +65,111 @@
          print("**  class does not exist **")
      elif len(line.split()) < 2:
          print("** instance id missing **")
+     else:
          new_instance = "{}.{}".format(line.split()[0], line.split()[1])
-             objs = models.storage.all()
+         objs = models.storage.all()
 
-             if new_instance not in objs:
-                 print("** no instance found **")
-             else:
-                 print(objs[new_instance])
+         if new_instance not in objs:
+             print("** no instance found **")
+         else:
+             print(objs[new_instance])
 
      def do_destroy(self, line):
-                     """
-                     Delete command that delete an instance based on the class name and id
-                     """
-                     splitline = split(line)
+     """
+     Delete command that delete an instance based on the class name and id
+     """
+     splitline = split(line)
 
-                     if not splitline:
-                         print("** class name missing **")
-                         return False
+     if not splitline:
+         print("** class name missing **")
+         return False
+     elif splitline[0] not in new_classes:
+         print("** class does not exist **")
+     
+     elif len(splitline) < 2:
+         print("** instance id missing **")
 
-                     elif splitline[0] not in new_classes:
-                         print("** class does not exist **")
-
-                     elif len(splitline) < 2:
-                         print("** instance id missing **")
-
-                     else:
-                         new_instance = splitline[0] + '.' + splitline[1]
-                         if new_instance not in models.storage.all():
-                             print("** no instance found **")
-                         else:
-                             del models.storage.all()[new_instance]
-                                     models.storage.save()
-     def do_all(self, line):
-         """
-         All commands that print all instances based or not on class name
-         """
-         str_list = []
-
-         if not line:
-             for new_instance in models.storage.all().values():
-                 str_list.append(str(new_instance))
+     else:
+         new_instance = splitline[0] + '.' + splitline[1]
+         if new_instance not in models.storage.all():
+             print("** no instance found **")
+         else:
+             del models.storage.all()[new_instance]
              
-         else: splitline = split(line)
-             if splitline[0] in new_classes:
-                 for key, value in models.storage.all().items():
-                     if value.__class__.__name__ == splitline[0]:
-                         str_list.append(str(value))
-             else:
+             models.storage.save()
+     def do_all(self, line):
+     """
+     All commands that print all instances based or not on class name
+     """
+     str_list = []
+
+     if not line:
+         for new_instance in models.storage.all().values():
+             str_list.append(str(new_instance))
+
+         else:
+             splitline = split(line)
+         if splitline[0] in new_classes:
+             for key, value in models.storage.all().items():
+                 if value.__class__.__name__ == splitline[0]:
+                     str_list.append(str(value))
+                 else:
                  print("**class does not exit **")
                  return False
 
              print(str_list)
 
-             def do_update(self, line):
+     def do_update(self, line):
+     """
+     Update command to update an instance based on class name and id
+     """
+     splitline = split(line)
+
+     if not splitline:
+         print("** class name missing **")
+
+     elif splitline[0] not in new_classes:
+         print("** class doesn't exist **")
+     elif len(splitline) < 2:
+         print("** instance id missing **")
+     elif len(splitline) < 3:
+         print("** attribute name missing **")
+     elif len(splitline) < 4:
+         print("** value missing **")
+     else:
+         new_instance = splitline[0] + '.' + splitline[1]
+         if new_instance not in models.storage.all():
+             print("** no instance found **")
+         else:
+             setattr(models.storage,all()[new_instance], splitline[2], splitline[3])
+             models.storage.save()
+     def default(self, line):
+     """
+     Parse and interpretates a line if not found on regular commands
+     """
+     count = 0
+     splitline = line.split('.', 1)
+     if len(splitline) >= 2:
+         line = splitline[1].split('(')
+         """
+         Excute <class name>.all()
+         """
+         if line[0] == 'all':
+             self.do_all(splitline[0])
              """
-             Update command to update an instance based on class name and id
+             Excute <class name>.count()
              """
-             splitline = split(line)
-             
-             if not splitline:
-                 print("** class name missing **")
-             
-             elif splitline[0] not in new_classes:
-                 print("** class doesn't exist **")
-
-             elif len(splitline) < 2:
-                 print("** instance id missing **")
-
-             elif len(splitline) < 3:
-                 print("** attribute name missing **")
-
-             elif len(splitline) < 4:
-                 print("** value missing **")
-
-             else:
-                 new_instance = splitline[0] + '.' + splitline[1]
-                 if new_instance not in models.storage.all():
-                     print("** no instance found **")
-
-                 else:
-                     setattr(models.storage,all()[new_instance], splitline[2], splitline[3])
-                     models.storage.save()
-             def default(self, line):
-             """
-             Parse and interpretates a line if not found on regular commands
-             """
-             count = 0
-             splitline = line.split('.',1)
-             if len(splitline) >= 2:
-                 line = splitline[1].split(')')
-                 """
-                 Excute <class name>.all()
-                 """
-                 if line[0] == 'all':
-                     self.do_all(splitline[0])
-                     """
-                     Excute <class name>.count()
-                     """
-                 elif line[0] == 'count':
-                     for key in models.storage.all():
-                         if splitline[0] == key.split(".")[0]:
-                             count += 1
+         elif line[0] == 'count':
+             for key in models.storage.all():
+                 if splitline[0] == key.split(".")[0]:
+                     count += 1
 
                      print(count)
                      """
                      Excute <class name>.show(<id>)
                      """
                  elif line[0] == 'show':
-                     id = line[1].split('(')
+                     id = line[1].split(')')
                      str_id = str(splitline[0]) + " " + str(id[0])
                      self.do_show(str_id)
                      """
@@ -185,7 +182,6 @@
                          line = update[0].split(",")
                          str_id = str(splitline[0]) + " " + str(line[0]) + \ "" + str(line[1]) + str(line[2])
                          self.do_update(str_id)
-
                      else:
                          id = split[0][:-2]
                          str_disct = split[1][:-1]
