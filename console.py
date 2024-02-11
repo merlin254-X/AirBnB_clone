@@ -2,8 +2,8 @@
 
 import cmd
 import models
-from models.review import Review
 from models.base_model import BaseModel
+from models.review import Review
 from models.amenity import Amenity
 from models.state import State
 from models.city import City
