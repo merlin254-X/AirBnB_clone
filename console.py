@@ -135,10 +135,10 @@ class HBNBCommand(cmd.Cmd):
             new_instance = splitline[0] + '.' + splitline[1]
             if new_instance not in models.storage.all():
                 print("** no instance found **")
-
             else:
-                setattr(models.storage,all()[new_instance], splitline[2], splitline[3])
+                setattr(models.storage.all()[new_instance], splitline[2], splitline[3])
                 models.storage.save()
+
     def default(self, line):
         """
         Parse and interpret a line if not found in regular commands
