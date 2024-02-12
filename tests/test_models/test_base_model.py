@@ -8,6 +8,7 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 
+
 class TestBaseModel(unittest.TestCase):
     def test_init(self):
         """
@@ -32,7 +33,8 @@ class TestBaseModel(unittest.TestCase):
         Test if the __str__ method produces the expected output
         """
         my_model = BaseModel()
-        expected_output = f"[{my_model.__class__.__name__}] ({my_model.id}) {my_model.__dict__}"
+        expected_output = f"[{my_model.__class__.__name__}]
+        ({my_model.id}) {my_model.__dict__}"
         self.assertEqual(str(my_model), expected_output)
 
     def test_to_dict_method(self):
@@ -41,15 +43,17 @@ class TestBaseModel(unittest.TestCase):
         """
         my_model = BaseModel()
         my_model_dict = my_model.to_dict()
-    
-    
         self.assertIsInstance(my_model_dict, dict)
-    
-        
+
         self.assertEqual(my_model_dict["__class__"], "BaseModel")
         self.assertEqual(my_model_dict["id"], my_model.id)
-        self.assertEqual(my_model_dict["created_at"], my_model.created_at.isoformat())
-        self.assertEqual(my_model_dict["updated_at"], my_model.updated_at.isoformat())
+        self.assertEqual(
+            my_model_dict["created_at"], my_model.created_at.isoformat()
+        )
+        self.assertEqual(
+            my_model_dict["updated_at"], my_model.updated_at.isoformat()
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
