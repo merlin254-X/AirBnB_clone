@@ -33,8 +33,8 @@ class TestBaseModel(unittest.TestCase):
         Test if the __str__ method produces the expected output
         """
         my_model = BaseModel()
-        expected_output = f"[{my_model.__class__.__name__}]
-        ({my_model.id}) {my_model.__dict__}"
+        expected_output = f"[{my_model.__class__.__name__}] ({my_model.id}) {my_model.__dict__}"
+
         self.assertEqual(str(my_model), expected_output)
 
     def test_to_dict_method(self):
