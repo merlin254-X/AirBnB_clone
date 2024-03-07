@@ -7,9 +7,11 @@ import os
 import json
 from models.base_model import BaseModel
 
+
 class FileStorage:
     """
-    FileStorage class for serializing/deserializing instances to/from JSON file.
+    FileStorage class for serializing/deserializing instances
+    to/from JSON file.
     """
 
     __file_path = "file.json"
