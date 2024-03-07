@@ -88,7 +88,8 @@ class HBNBCommand(cmd.Cmd):
                 if arg[0] not in storage.classes:
                     raise KeyError
                 else:
-                    print([str(value) for key, value in storage.all().items() if arg[0] in key])
+                    print([str(value) for key, value in storage.all().items()
+                           if arg[0] in key])
             except KeyError:
                 print("** class doesn't exist **")
 
