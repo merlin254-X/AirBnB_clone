@@ -56,6 +56,6 @@ class FileStorage:
                     try:
                         cls = eval(class_name)
                         instance = cls(**value)
-                        self.__objects[key] = instance
-                    except AttributeError:
+                        FileStorage.__objects[key] = instance
+                    except Exception:
                         pass
